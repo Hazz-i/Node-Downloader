@@ -1,13 +1,21 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const nexo = require('nexo-aio-downloader');
 const axios = require('axios');
+const jwt = require('jsonwebtoken');
+const optionalAuthenticate = require('./authenticate');
 
 const app = express();
 app.use(cors());
+app.use(optionalAuthenticate);
 
-// YouTube Download (buffer langsung)
-app.get('/youtube-download', async (req, res) => {
+const SECRET = process.env.JWT_SECRET || 'your_secret_key';
+const PORT = process.env.PORT || 3001;
+
+// --- YOUTUBE ---
+app.get('/youtube-download', optionalAuthenticate, async (req, res) => {
+	console.log('YouTube route triggered'); // Tambah ini
 	const url = req.query.url;
 	const quality = parseInt(req.query.quality || '3');
 
@@ -17,25 +25,34 @@ app.get('/youtube-download', async (req, res) => {
 
 	try {
 		const result = await nexo.youtube(url, quality);
+
+		if (!result.status || !result.data?.result) {
+			throw new Error('No downloadable content found');
+		}
+
+		const videoUrl = result.data.result; // ini URL, bukan buffer
 		const filename = `${result.data.title || 'video'}.mp4`;
-		const buffer = result.data.result;
+
+		// Download ulang video dari URL dan stream ke FE
+		const videoStream = await axios.get(videoUrl, { responseType: 'stream' });
 
 		res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
 		res.setHeader('Content-Type', 'video/mp4');
-		res.send(buffer);
+		videoStream.data.pipe(res);
 	} catch (err) {
+		console.error('YouTube download error:', err.message);
 		res.status(500).json({ success: false, error: err.message });
 	}
 });
 
-// Instagram Download (stream URL)
-app.get('/instagram-download', async (req, res) => {
+// --- INSTAGRAM ---
+app.get('/instagram-download', optionalAuthenticate, async (req, res) => {
 	const url = req.query.url;
 	if (!url) return res.status(400).json({ error: 'No URL provided' });
 
 	try {
 		const result = await nexo.instagram(url);
-		if (!result.status || !result.data.url?.length) {
+		if (!result.status || !result.data?.url?.length) {
 			throw new Error('No downloadable content found');
 		}
 
@@ -46,12 +63,13 @@ app.get('/instagram-download', async (req, res) => {
 		res.setHeader('Content-Type', 'video/mp4');
 		videoStream.data.pipe(res);
 	} catch (err) {
+		console.error('Instagram download error:', err.message);
 		res.status(500).json({ success: false, error: err.message });
 	}
 });
 
-// Facebook Download (stream URL)
-app.get('/facebook-download', async (req, res) => {
+// --- FACEBOOK ---
+app.get('/facebook-download', optionalAuthenticate, async (req, res) => {
 	const url = req.query.url;
 	if (!url) return res.status(400).json({ error: 'No URL provided' });
 
@@ -59,7 +77,7 @@ app.get('/facebook-download', async (req, res) => {
 		const result = await nexo.facebook(url);
 		const videoList = result?.data?.result;
 
-		if (!result.status || !videoList || videoList.length === 0) {
+		if (!result.status || !videoList?.length) {
 			throw new Error('No downloadable content found');
 		}
 
@@ -70,10 +88,11 @@ app.get('/facebook-download', async (req, res) => {
 		res.setHeader('Content-Type', 'video/mp4');
 		videoStream.data.pipe(res);
 	} catch (err) {
+		console.error('Facebook download error:', err.message);
 		res.status(500).json({ success: false, error: err.message });
 	}
 });
 
-app.listen(3001, () => {
-	console.log('Server running on http://localhost:3001');
+app.listen(PORT, () => {
+	console.log(`Downloader running on http://localhost:${PORT}`);
 });
