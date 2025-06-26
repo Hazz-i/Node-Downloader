@@ -4,6 +4,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node server.js",
+		"debug": "node ori.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
@@ -16,6 +17,7 @@
 		"dotenv": "^16.5.0",
 		"express": "^5.1.0",
 		"jsonwebtoken": "^9.0.2",
-		"nexo-aio-downloader": "^1.7.2"
+		"nexo-aio-downloader": "^1.7.2",
+		"youtube-dl-exec": "^3.0.22"
 	}
 }

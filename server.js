@@ -6,6 +6,9 @@ const axios = require('axios');
 const jwt = require('jsonwebtoken');
 const optionalAuthenticate = require('./authenticate');
 
+const fs = require('fs');
+const ytdlExec = require('youtube-dl-exec');
+
 const app = express();
 app.use(cors());
 app.use(optionalAuthenticate);
@@ -13,35 +16,56 @@ app.use(optionalAuthenticate);
 const SECRET = process.env.JWT_SECRET || 'your_secret_key';
 const PORT = process.env.PORT || 3001;
 
+const YT_DLP_PATH = process.env.YOUTUBE_DL_PATH || './bin/yt-dlp.exe';
+
 // --- YOUTUBE ---
 app.get('/youtube-download', optionalAuthenticate, async (req, res) => {
-	console.log('YouTube route triggered'); // Tambah ini
+	console.log('[YT-DLP] Route triggered');
 	const url = req.query.url;
-	const quality = parseInt(req.query.quality || '3');
+	const quality = req.query.quality || '18'; // 18 = 360p MP4 (default)
 
 	if (!url) {
 		return res.status(400).json({ error: 'No URL provided' });
 	}
 
-	try {
-		const result = await nexo.youtube(url, quality);
+	if (!fs.existsSync(YT_DLP_PATH)) {
+		return res.status(500).json({ error: 'yt-dlp.exe not found on server' });
+	}
 
-		if (!result.status || !result.data?.result) {
-			throw new Error('No downloadable content found');
+	try {
+		const videoInfo = await ytdlExec(YT_DLP_PATH, {
+			args: [
+				url,
+				'--dump-single-json',
+				'--no-warnings',
+				'--no-check-certificates',
+				'--prefer-free-formats',
+				'--format',
+				'best[ext=mp4]/best',
+			],
+		});
+
+		if (!videoInfo || !videoInfo.formats?.length) {
+			throw new Error('No downloadable formats found');
 		}
 
-		const videoUrl = result.data.result; // ini URL, bukan buffer
-		const filename = `${result.data.title || 'video'}.mp4`;
+		const selectedFormat =
+			videoInfo.formats.find((f) => f.format_id === quality) ||
+			videoInfo.formats.find((f) => f.ext === 'mp4' && f.url);
 
-		// Download ulang video dari URL dan stream ke FE
-		const videoStream = await axios.get(videoUrl, { responseType: 'stream' });
+		if (!selectedFormat?.url) {
+			throw new Error('Suitable download URL not found');
+		}
+
+		const filename = `${videoInfo.title || 'video'}.mp4`.replace(/[<>:"\/\\|?*]/g, '');
+		const videoStream = await axios.get(selectedFormat.url, { responseType: 'stream' });
 
 		res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
 		res.setHeader('Content-Type', 'video/mp4');
 		videoStream.data.pipe(res);
 	} catch (err) {
-		console.error('YouTube download error:', err.message);
-		res.status(500).json({ success: false, error: err.message });
+		console.error('[YT-DLP Error]:', err.stderr || err.message || err);
+		res.status(500).json({ success: false, error: err.stderr || err.message || 'Unknown error' });
 	}
 });
 

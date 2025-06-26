@@ -26,6 +26,9 @@ importers:
       nexo-aio-downloader:
         specifier: ^1.7.2
         version: 1.7.2(undici@6.21.3)
+      youtube-dl-exec:
+        specifier: ^3.0.22
+        version: 3.0.22
 
 packages:
 
@@ -1128,8 +1131,8 @@ packages:
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
 
-  youtube-dl-exec@3.0.21:
-    resolution: {integrity: sha512-z3WS7WAzzKt64N0d6NkwRe8wVwzd5ve5nXo5jg+mfRmp0FUV8p5I4IymkWI1LYRNcOcexlKcdTZSOB+yVJMMzw==}
+  youtube-dl-exec@3.0.22:
+    resolution: {integrity: sha512-Js2dRkNJnbLL7ptzoWsUEehH7PS0CYL6ArT8MYLv0G/M/6WYxbkgU3lIH/gdp/IKl42QOZZRWhPlJdt6pRghFg==}
     engines: {node: '>= 18'}
 
 snapshots:
@@ -1221,11 +1224,9 @@ snapshots:
   '@img/sharp-win32-x64@0.33.5':
     optional: true
 
-  '@jclem/logfmt2@2.4.3':
-    optional: true
+  '@jclem/logfmt2@2.4.3': {}
 
-  '@kikobeats/time-span@1.0.5':
-    optional: true
+  '@kikobeats/time-span@1.0.5': {}
 
   '@mapbox/node-pre-gyp@1.0.11':
     dependencies:
@@ -1293,13 +1294,11 @@ snapshots:
       binary-version: 7.1.0
       semver: 7.7.2
       semver-truncate: 3.0.0
-    optional: true
 
   binary-version@7.1.0:
     dependencies:
       execa: 8.0.1
       find-versions: 6.0.0
-    optional: true
 
   bluebird@3.7.2: {}
 
@@ -1415,8 +1414,7 @@ snapshots:
 
   content-type@1.0.5: {}
 
-  convert-hrtime@5.0.0:
-    optional: true
+  convert-hrtime@5.0.0: {}
 
   cookie-signature@1.2.2: {}
 
@@ -1434,7 +1432,6 @@ snapshots:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
-    optional: true
 
   crypto-js@4.2.0: {}
 
@@ -1452,10 +1449,8 @@ snapshots:
     dependencies:
       es5-ext: 0.10.64
       type: 2.7.3
-    optional: true
 
-  dargs@7.0.0:
-    optional: true
+  dargs@7.0.0: {}
 
   debug-fabulous@2.0.2:
     dependencies:
@@ -1463,7 +1458,6 @@ snapshots:
       memoizee: 0.4.17
     transitivePeerDependencies:
       - supports-color
-    optional: true
 
   debug-logfmt@1.2.3:
     dependencies:
@@ -1473,7 +1467,6 @@ snapshots:
       pretty-ms: 7.0.1
     transitivePeerDependencies:
       - supports-color
-    optional: true
 
   debug@4.4.1:
     dependencies:
@@ -1574,20 +1567,17 @@ snapshots:
       es6-symbol: 3.1.4
       esniff: 2.0.1
       next-tick: 1.1.0
-    optional: true
 
   es6-iterator@2.0.3:
     dependencies:
       d: 1.0.2
       es5-ext: 0.10.64
       es6-symbol: 3.1.4
-    optional: true
 
   es6-symbol@3.1.4:
     dependencies:
       d: 1.0.2
       ext: 1.7.0
-    optional: true
 
   es6-weak-map@2.0.3:
     dependencies:
@@ -1595,7 +1585,6 @@ snapshots:
       es5-ext: 0.10.64
       es6-iterator: 2.0.3
       es6-symbol: 3.1.4
-    optional: true
 
   escape-html@1.0.3: {}
 
@@ -1605,7 +1594,6 @@ snapshots:
       es5-ext: 0.10.64
       event-emitter: 0.3.5
       type: 2.7.3
-    optional: true
 
   etag@1.8.1: {}
 
@@ -1613,7 +1601,6 @@ snapshots:
     dependencies:
       d: 1.0.2
       es5-ext: 0.10.64
-    optional: true
 
   execa@8.0.1:
     dependencies:
@@ -1626,7 +1613,6 @@ snapshots:
       onetime: 6.0.0
       signal-exit: 4.1.0
       strip-final-newline: 3.0.0
-    optional: true
 
   express@5.1.0:
     dependencies:
@@ -1663,7 +1649,6 @@ snapshots:
   ext@1.7.0:
     dependencies:
       type: 2.7.3
-    optional: true
 
   ffmpeg-static@5.2.0:
     dependencies:
@@ -1689,7 +1674,6 @@ snapshots:
     dependencies:
       semver-regex: 4.0.5
       super-regex: 1.0.0
-    optional: true
 
   follow-redirects@1.15.9: {}
 
@@ -1718,8 +1702,7 @@ snapshots:
 
   function-bind@1.1.2: {}
 
-  function-timeout@1.0.2:
-    optional: true
+  function-timeout@1.0.2: {}
 
   gauge@3.0.2:
     dependencies:
@@ -1751,8 +1734,7 @@ snapshots:
       dunder-proto: 1.0.1
       es-object-atoms: 1.1.1
 
-  get-stream@8.0.1:
-    optional: true
+  get-stream@8.0.1: {}
 
   gifencoder@2.0.1:
     dependencies:
@@ -1819,8 +1801,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  human-signals@5.0.0:
-    optional: true
+  human-signals@5.0.0: {}
 
   iconv-lite@0.6.3:
     dependencies:
@@ -1839,21 +1820,17 @@ snapshots:
 
   is-fullwidth-code-point@3.0.0: {}
 
-  is-promise@2.2.2:
-    optional: true
+  is-promise@2.2.2: {}
 
   is-promise@4.0.0: {}
 
-  is-stream@3.0.0:
-    optional: true
+  is-stream@3.0.0: {}
 
-  is-unix@2.0.10:
-    optional: true
+  is-unix@2.0.10: {}
 
   isarray@1.0.0: {}
 
-  isexe@2.0.0:
-    optional: true
+  isexe@2.0.0: {}
 
   jsonfile@6.1.0:
     dependencies:
@@ -1902,7 +1879,6 @@ snapshots:
   lru-queue@0.1.0:
     dependencies:
       es5-ext: 0.10.64
-    optional: true
 
   make-dir@3.1.0:
     dependencies:
@@ -1927,12 +1903,10 @@ snapshots:
       lru-queue: 0.1.0
       next-tick: 1.1.0
       timers-ext: 0.1.8
-    optional: true
 
   merge-descriptors@2.0.0: {}
 
-  merge-stream@2.0.0:
-    optional: true
+  merge-stream@2.0.0: {}
 
   mime-db@1.52.0: {}
 
@@ -1946,8 +1920,7 @@ snapshots:
     dependencies:
       mime-db: 1.54.0
 
-  mimic-fn@4.0.0:
-    optional: true
+  mimic-fn@4.0.0: {}
 
   mimic-response@2.1.0: {}
 
@@ -1991,15 +1964,14 @@ snapshots:
       tough-cookie: 5.1.2
       unzipper: 0.12.3
     optionalDependencies:
-      youtube-dl-exec: 3.0.21
+      youtube-dl-exec: 3.0.22
     transitivePeerDependencies:
       - debug
       - encoding
       - supports-color
       - undici
 
-  next-tick@1.1.0:
-    optional: true
+  next-tick@1.1.0: {}
 
   node-fetch@2.7.0:
     dependencies:
@@ -2014,7 +1986,6 @@ snapshots:
   npm-run-path@5.3.0:
     dependencies:
       path-key: 4.0.0
-    optional: true
 
   npmlog@5.0.1:
     dependencies:
@@ -2042,12 +2013,10 @@ snapshots:
   onetime@6.0.0:
     dependencies:
       mimic-fn: 4.0.0
-    optional: true
 
   parse-cache-control@1.0.1: {}
 
-  parse-ms@2.1.0:
-    optional: true
+  parse-ms@2.1.0: {}
 
   parse5-htmlparser2-tree-adapter@7.1.0:
     dependencies:
@@ -2066,18 +2035,15 @@ snapshots:
 
   path-is-absolute@1.0.1: {}
 
-  path-key@3.1.1:
-    optional: true
+  path-key@3.1.1: {}
 
-  path-key@4.0.0:
-    optional: true
+  path-key@4.0.0: {}
 
   path-to-regexp@8.2.0: {}
 
   pretty-ms@7.0.1:
     dependencies:
       parse-ms: 2.1.0
-    optional: true
 
   process-nextick-args@2.0.1: {}
 
@@ -2150,13 +2116,11 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  semver-regex@4.0.5:
-    optional: true
+  semver-regex@4.0.5: {}
 
   semver-truncate@3.0.0:
     dependencies:
       semver: 7.7.2
-    optional: true
 
   semver@6.3.1: {}
 
@@ -2220,10 +2184,8 @@ snapshots:
   shebang-command@2.0.0:
     dependencies:
       shebang-regex: 3.0.0
-    optional: true
 
-  shebang-regex@3.0.0:
-    optional: true
+  shebang-regex@3.0.0: {}
 
   side-channel-list@1.0.0:
     dependencies:
@@ -2255,8 +2217,7 @@ snapshots:
 
   signal-exit@3.0.7: {}
 
-  signal-exit@4.1.0:
-    optional: true
+  signal-exit@4.1.0: {}
 
   simple-concat@1.0.1: {}
 
@@ -2294,14 +2255,12 @@ snapshots:
     dependencies:
       ansi-regex: 5.0.1
 
-  strip-final-newline@3.0.0:
-    optional: true
+  strip-final-newline@3.0.0: {}
 
   super-regex@1.0.0:
     dependencies:
       function-timeout: 1.0.2
       time-span: 5.1.0
-    optional: true
 
   tar@6.2.1:
     dependencies:
@@ -2315,16 +2274,13 @@ snapshots:
   time-span@5.1.0:
     dependencies:
       convert-hrtime: 5.0.0
-    optional: true
 
   timers-ext@0.1.8:
     dependencies:
       es5-ext: 0.10.64
       next-tick: 1.1.0
-    optional: true
 
-  tinyspawn@1.5.0:
-    optional: true
+  tinyspawn@1.5.0: {}
 
   tldts-core@6.1.86: {}
 
@@ -2349,8 +2305,7 @@ snapshots:
       media-typer: 1.1.0
       mime-types: 3.0.1
 
-  type@2.7.3:
-    optional: true
+  type@2.7.3: {}
 
   typedarray@0.0.6: {}
 
@@ -2388,7 +2343,6 @@ snapshots:
   which@2.0.2:
     dependencies:
       isexe: 2.0.0
-    optional: true
 
   wide-align@1.1.5:
     dependencies:
@@ -2398,7 +2352,7 @@ snapshots:
 
   yallist@4.0.0: {}
 
-  youtube-dl-exec@3.0.21:
+  youtube-dl-exec@3.0.22:
     dependencies:
       binary-version-check: 6.1.0
       dargs: 7.0.0
@@ -2407,4 +2361,3 @@ snapshots:
       tinyspawn: 1.5.0
     transitivePeerDependencies:
       - supports-color
-    optional: true
