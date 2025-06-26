@@ -1,31 +1,34 @@
 # Use official Node.js runtime as base image
 FROM node:18-alpine
 
+# ✅ Tambahkan Python & dependensi build
+RUN apk add --no-cache python3 py3-pip make g++
+
 # Set working directory in container
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if available)
+# Copy package.json dan lock file
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install --only=production
 
-# Copy application source code
+# Copy source code
 COPY . .
 
-# Create non-root user for security
+# Buat user non-root
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
-# Change ownership of the app directory to the nodejs user
+# Ganti owner
 RUN chown -R nextjs:nodejs /app
 USER nextjs
 
-# Expose the port the app runs on
+# Expose port
 EXPOSE 3005
 
-# Define environment variable
+# Set environment
 ENV NODE_ENV=production
 
-# Command to run the application
+# Jalankan aplikasi
 CMD ["npm", "start"]
