@@ -1,26 +1,35 @@
-# Use official Node.js runtime as base image
+# Use official Node.js runtime
 FROM node:18-alpine
 
-# ✅ Tambahkan Python & dependensi build
-RUN apk add --no-cache python3 py3-pip make g++
+# Add dependencies for node-canvas and other native builds
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    make \
+    g++ \
+    pkgconfig \
+    pixman \
+    cairo-dev \
+    pango-dev \
+    giflib-dev \
+    jpeg-dev \
+    libpng-dev \
+    musl-dev
 
-# Set working directory in container
+# Set working directory
 WORKDIR /app
 
-# Copy package.json dan lock file
+# Copy only package info first
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install --only=production
 
-# Copy source code
+# Copy the rest of the app
 COPY . .
 
-# Buat user non-root
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
-
-# Ganti owner
+# Create and use non-root user
+RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 RUN chown -R nextjs:nodejs /app
 USER nextjs
 
@@ -30,5 +39,5 @@ EXPOSE 3005
 # Set environment
 ENV NODE_ENV=production
 
-# Jalankan aplikasi
+# Run app
 CMD ["npm", "start"]
