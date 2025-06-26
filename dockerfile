@@ -40,4 +40,4 @@ EXPOSE 3005
 ENV NODE_ENV=production
 
 # Run app
-CMD ["npm", "start"]
+CMD ["node", "server.js"]

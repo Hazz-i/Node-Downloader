@@ -118,5 +118,5 @@ app.get('/facebook-download', optionalAuthenticate, async (req, res) => {
 });
 
 app.listen(PORT, () => {
-	console.log(`Downloader running on http://localhost:${PORT}`);
+	console.log(`Downloader running on port: ${PORT}`);
 });
